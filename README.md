@@ -96,3 +96,6 @@ Header seluruh halaman sekarang menampilkan logo Badan Gizi Nasional (BGN) dari 
 `https://zonalogo.com/assets/logo-bgn.webp?asset=663`
 
 Logo ditempatkan di div brand bersama teks `SPPG PLOSOREJO` dan subjudul `Makan Bergizi Gratis`.
+
+## Revisi v9
+- Logo BGN juga dipasang sebagai favicon/icon tab browser di seluruh halaman.
