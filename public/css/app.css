@@ -21,3 +21,8 @@
 @media(max-width:1050px){.home-grid-5{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:800px){.home-grid-5{grid-template-columns:repeat(2,1fr)}.span-2,.span-3{grid-column:1/-1}}
 @media(max-width:520px){.home-grid-5{grid-template-columns:1fr}.upload-progress{align-items:stretch;flex-direction:column}.archive-dropzone .btn{width:auto}}
+
+/* Revisi kegiatan harian v7 */
+.compact-notice{padding:12px 14px;margin:0 0 16px;font-size:.92rem}
+.recipient-row{scroll-margin-top:110px}
+.recipient-row:focus-within{outline:2px solid rgba(17,97,73,.18);outline-offset:2px}

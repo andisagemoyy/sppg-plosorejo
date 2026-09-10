@@ -2,8 +2,8 @@ import { getStore } from '@netlify/blobs';
 import { authorize } from '../lib/access.mjs';
 import { fail } from '../lib/http.mjs';
 const MAX_CHUNK=3.2*1024*1024;
-function metaStore(){return getStore({name:'sppg-archive-meta',consistency:'strong'});}
-function fileStore(){return getStore({name:'sppg-archive-files',consistency:'strong'});}
+function metaStore(){return getStore('sppg-archive-meta');}
+function fileStore(){return getStore('sppg-archive-files');}
 export default async(req)=>{
   const auth=authorize(req);if(!auth.ok)return fail(auth.message,auth.status);
   const url=new URL(req.url),id=url.searchParams.get('id'),idx=Number(url.searchParams.get('index'));if(!id||!Number.isInteger(idx)||idx<0)return fail('Parameter potongan file tidak valid.',400);

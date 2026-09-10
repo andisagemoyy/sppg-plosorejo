@@ -2,7 +2,7 @@ import { getStore } from '@netlify/blobs';
 import { authorize } from '../lib/access.mjs';
 import { json,fail,readJSON } from '../lib/http.mjs';
 
-function store(){return getStore({name:'sppg-kegiatan',consistency:'strong'});}
+function store(){return getStore('sppg-kegiatan');}
 function validDate(v){return /^\d{4}-\d{2}-\d{2}$/.test(v||'');}
 
 export default async(req)=>{
@@ -19,12 +19,12 @@ export default async(req)=>{
     if(req.method==='POST'){
       const data=await readJSON(req);if(!validDate(data.id)||data.id!==data.tanggal_operasional)return fail('Tanggal laporan tidak valid.',400);
       const existing=await s.get(data.id,{type:'json',consistency:'strong'});if(existing)return fail('Laporan untuk tanggal ini sudah ada.',409,'DUPLICATE');
-      const now=new Date().toISOString(),row={...data,created_at:now,updated_at:now,schema_version:6};const result=await s.setJSON(row.id,row,{onlyIfNew:true});if(result?.modified===false)return fail('Laporan untuk tanggal ini sudah ada.',409,'DUPLICATE');return json(row,201);
+      const now=new Date().toISOString(),row={...data,created_at:now,updated_at:now,schema_version:7};const result=await s.setJSON(row.id,row,{onlyIfNew:true});if(result?.modified===false)return fail('Laporan untuk tanggal ini sudah ada.',409,'DUPLICATE');return json(row,201);
     }
     if(req.method==='PUT'){
       const data=await readJSON(req);if(!validDate(data.id)||data.id!==data.tanggal_operasional)return fail('Tanggal laporan tidak valid.',400);
       const old=await s.get(data.id,{type:'json',consistency:'strong'});if(!old)return fail('Laporan tidak ditemukan.',404);
-      const row={...old,...data,id:old.id,tanggal_operasional:old.tanggal_operasional,created_at:old.created_at||new Date().toISOString(),updated_at:new Date().toISOString(),schema_version:6};await s.setJSON(row.id,row);return json(row);
+      const row={...old,...data,id:old.id,tanggal_operasional:old.tanggal_operasional,created_at:old.created_at||new Date().toISOString(),updated_at:new Date().toISOString(),schema_version:7};await s.setJSON(row.id,row);return json(row);
     }
     if(req.method==='DELETE'){
       if(!id)return fail('ID laporan wajib diisi.',400);await s.delete(id);return new Response(null,{status:204});

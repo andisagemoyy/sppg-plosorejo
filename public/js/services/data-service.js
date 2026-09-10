@@ -13,11 +13,20 @@
   }
 
   async function rawGet(id){
-    return request(`/api/kegiatan?id=${encodeURIComponent(id)}`);
+    if(!id) return null;
+    try{
+      return await request(`/api/kegiatan?id=${encodeURIComponent(id)}`);
+    }catch(err){
+      // 404 berarti tanggal tersebut memang belum mempunyai laporan.
+      // Ini bukan kegagalan koneksi dan harus dikembalikan sebagai null.
+      if(err?.status===404) return null;
+      throw err;
+    }
   }
   async function get(id){
     if(!id) return null;
     const row=await rawGet(id);
+    if(!row) return null;
     if(row?.foto_menu?.ada){
       try{row.foto_menu.data=await request(`/api/menu-photo?date=${encodeURIComponent(id)}`);}catch{}
     }
@@ -38,7 +47,12 @@
     if(!data?.id) throw new Error('Tanggal laporan belum diisi.');
     if(originalId&&originalId!==data.id) throw new Error('Tanggal laporan tidak dapat diubah saat mode edit.');
     if(!originalId){
-      try{await rawGet(data.id);const e=new Error('DUPLICATE');e.code='DUPLICATE';throw e;}catch(err){if(err.status!==404&&err.message!=='DUPLICATE')throw err;if(err.message==='DUPLICATE')throw err;}
+      const existing=await rawGet(data.id);
+      if(existing){
+        const e=new Error('DUPLICATE');
+        e.code='DUPLICATE';
+        throw e;
+      }
     }
     const photo=data.foto_menu?.data instanceof Blob?data.foto_menu.data:null;
     let photoMeta=data.foto_menu?{...data.foto_menu}:null;

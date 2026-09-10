@@ -3,7 +3,7 @@ import { authorize } from '../lib/access.mjs';
 import { json,fail,readJSON } from '../lib/http.mjs';
 import { DEFAULT_PROFILE } from '../lib/default-profile.mjs';
 const KEY='utama';
-function store(){return getStore({name:'sppg-profile',consistency:'strong'});}
+function store(){return getStore('sppg-profile');}
 export default async(req)=>{
   const auth=authorize(req);if(!auth.ok)return fail(auth.message,auth.status);
   const s=store();

@@ -1,7 +1,7 @@
 import { getStore } from '@netlify/blobs';
 import { authorize } from '../lib/access.mjs';
 import { json,fail } from '../lib/http.mjs';
-function store(){return getStore({name:'sppg-menu-photos',consistency:'strong'});}
+function store(){return getStore('sppg-menu-photos');}
 function validDate(v){return /^\d{4}-\d{2}-\d{2}$/.test(v||'');}
 export default async(req)=>{
   const auth=authorize(req);if(!auth.ok)return fail(auth.message,auth.status);

@@ -76,3 +76,17 @@ netlify/lib/
 netlify.toml
 package.json
 ```
+
+
+## Revisi v7 - Kegiatan Harian & Rekap
+
+Perbaikan utama:
+
+- Pengecekan tanggal baru tidak lagi menganggap HTTP 404 sebagai error. Tanggal yang belum mempunyai laporan dikembalikan sebagai `null`.
+- API Netlify Blobs memakai bentuk `getStore("nama-store")` sesuai API Netlify saat ini.
+- Jam mulai/jam selesai bebas diisi dan tidak lagi divalidasi harus berurutan; kegiatan yang melewati tengah malam diperbolehkan.
+- Tombol Tambah Kelompok membuat kartu baru, memberi nomor urut, memperbarui jumlah kelompok, dan otomatis scroll/fokus ke kelompok yang baru dibuat.
+- Semua baris kelompok dikumpulkan dan disimpan bersama dalam `kelompok_penerima`.
+- Pesan error API sekarang menampilkan penyebab server agar debugging lebih mudah.
+
+Setelah mengganti file di repository, lakukan commit/push. Netlify akan deploy ulang otomatis.

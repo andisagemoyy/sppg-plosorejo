@@ -2,8 +2,8 @@ import { getStore } from '@netlify/blobs';
 import { authorize } from '../lib/access.mjs';
 import { json,fail,readJSON } from '../lib/http.mjs';
 const MAX_FILE=30*1024*1024;
-function metaStore(){return getStore({name:'sppg-archive-meta',consistency:'strong'});}
-function fileStore(){return getStore({name:'sppg-archive-files',consistency:'strong'});}
+function metaStore(){return getStore('sppg-archive-meta');}
+function fileStore(){return getStore('sppg-archive-files');}
 function validBagian(v){return ['ahli_gizi','akuntansi'].includes(v);}
 export default async(req)=>{
   const auth=authorize(req);if(!auth.ok)return fail(auth.message,auth.status);

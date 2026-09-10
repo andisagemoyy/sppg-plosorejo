@@ -12,7 +12,7 @@
 
   function stageHTML(data={}){
     const id=data.id||uid('tahap');
-    return `<div class="stage" data-id="${escapeHtml(id)}"><div class="row-head"><span class="row-title">Tahapan Produksi</span><button type="button" class="btn btn-danger btn-small remove-stage">Hapus</button></div><div class="grid grid-3"><div class="field"><label class="required">Nama Tahapan</label><input class="stage-name" value="${escapeHtml(data.nama_tahapan||'')}"><div class="error"></div></div><div class="field"><label>Jam Mulai</label><input type="time" class="stage-start" value="${escapeHtml(data.jam_mulai||'')}"></div><div class="field"><label>Jam Selesai</label><input type="time" class="stage-end" value="${escapeHtml(data.jam_selesai||'')}"><div class="error"></div></div></div><div class="field"><label class="required">Uraian Kegiatan</label><textarea class="stage-desc">${escapeHtml(data.uraian_kegiatan||'')}</textarea><div class="error"></div></div></div>`;
+    return `<div class="stage" data-id="${escapeHtml(id)}"><div class="row-head"><span class="row-title">Tahapan Produksi</span><button type="button" class="btn btn-danger btn-small remove-stage">Hapus</button></div><div class="grid grid-3"><div class="field"><label class="required">Nama Tahapan</label><input class="stage-name" value="${escapeHtml(data.nama_tahapan||'')}"><div class="error"></div></div><div class="field"><label>Jam Mulai</label><input type="time" class="stage-start" value="${escapeHtml(data.jam_mulai||'')}" step="60"><div class="hint">Bebas diisi sesuai kegiatan.</div></div><div class="field"><label>Jam Selesai</label><input type="time" class="stage-end" value="${escapeHtml(data.jam_selesai||'')}" step="60"><div class="hint">Boleh lebih kecil dari jam mulai jika kegiatan melewati tengah malam.</div></div></div><div class="field"><label class="required">Uraian Kegiatan</label><textarea class="stage-desc">${escapeHtml(data.uraian_kegiatan||'')}</textarea><div class="error"></div></div></div>`;
   }
 
   function recipientHTML(data={}){
@@ -21,7 +21,30 @@
   }
 
   function addStage(data){stages.insertAdjacentHTML('beforeend',stageHTML(data));}
-  function addRecipient(data){recipients.insertAdjacentHTML('beforeend',recipientHTML(data));calculate();}
+
+  function renumberRecipients(){
+    qsa('.recipient-row').forEach((row,index)=>{
+      const title=qs('.row-title',row);
+      if(title) title.textContent=`Kelompok Penerima ${index+1}`;
+    });
+    const count=qs('#recipientCount');
+    if(count) count.textContent=`${qsa('.recipient-row').length} kelompok`;
+  }
+
+  function addRecipient(data={},options={}){
+    recipients.insertAdjacentHTML('beforeend',recipientHTML(data));
+    renumberRecipients();
+    calculate();
+    const rows=qsa('.recipient-row');
+    const row=rows[rows.length-1];
+    if(options.scroll&&row){
+      requestAnimationFrame(()=>{
+        row.scrollIntoView({behavior:'smooth',block:'center'});
+        qs('.r-name',row)?.focus({preventScroll:true});
+      });
+    }
+    return row;
+  }
 
   function buildNutrition(){
     const n=qs('#nutrition');
@@ -68,7 +91,7 @@
       pengalihan_porsi:ada?{ada:peng,alasan:peng?qs('#alasan_pengalihan').value.trim():'',jumlah_porsi:peng?int(qs('#jumlah_pengalihan').value):0}:{ada:false,alasan:'',jumlah_porsi:0},
       kelompok_penerima:ada?groups:[],
       rekap:{total_pria:ada?totals.pria:0,total_wanita:ada?totals.wanita:0,total_lainnya:ada?totals.lainnya:0,total_penerima:ada?totals.total:0,grand_total_porsi:ada?calc.grand:0,selisih_porsi:ada?calc.diff:0},
-      foto_menu:fotoMenu,schema_version:5
+      foto_menu:fotoMenu,schema_version:7
     };
   }
 
@@ -85,7 +108,7 @@
           ok=false;
         }
       }catch(err){
-        showFormMessage('Gagal mengecek tanggal pada arsip online.','error-text');
+        showFormMessage(`Gagal mengecek tanggal pada arsip online: ${err.message}`,'error-text');
         ok=false;
       }
     }
@@ -94,10 +117,9 @@
     if(!ada)return ok;
     if(!qs('#nama_menu_mbg').value.trim()){setError(qs('#nama_menu_mbg'),'Nama Menu MBG wajib diisi.');ok=false;}
     qsa('.stage').forEach(row=>{
-      const name=qs('.stage-name',row),desc=qs('.stage-desc',row),start=qs('.stage-start',row).value,end=qs('.stage-end',row).value;
+      const name=qs('.stage-name',row),desc=qs('.stage-desc',row);
       if(!name.value.trim()){setError(name,'Nama tahapan wajib diisi.');ok=false;}
       if(!desc.value.trim()){setError(desc,'Uraian kegiatan wajib diisi.');ok=false;}
-      if(start&&end&&end<start){setError(qs('.stage-end',row),'Jam selesai tidak boleh lebih awal dari jam mulai.');ok=false;}
     });
     qsa('.recipient-row').forEach(row=>{
       const name=qs('.r-name',row),p=qs('.r-portions',row);
@@ -155,7 +177,8 @@
     qs('#jumlah_pengalihan').value=int(x.pengalihan_porsi?.jumlah_porsi);
     qs('#diversionFields').classList.toggle('hidden',!pg);
     recipients.innerHTML='';
-    (x.kelompok_penerima?.length?x.kelompok_penerima:[{}]).forEach(addRecipient);
+    (x.kelompok_penerima?.length?x.kelompok_penerima:[{}]).forEach(item=>addRecipient(item));
+    renumberRecipients();
     qsa('#nutrition input').forEach(el=>el.value=num(x.kandungan_gizi?.[el.dataset.size==='besar'?'porsi_besar':'porsi_kecil']?.[el.dataset.key]).toFixed(1));
     if(x.foto_menu?.data instanceof Blob){currentPhoto=x.foto_menu.data;currentPhotoName=x.foto_menu.nama_file||'foto-menu';showPhoto(currentPhoto,currentPhotoName);}
     else if(x.foto_menu?.storage_path||x.foto_menu?.url){existingPhotoMeta=x.foto_menu;showExistingPhoto(existingPhotoMeta);}
@@ -164,7 +187,7 @@
 
   function resetForm(){
     form.reset();stages.innerHTML='';recipients.innerHTML='';currentPhoto=null;currentPhotoName='';existingPhotoMeta=null;revokePreview();qs('#menuPreview').style.display='none';
-    defaultStages.forEach(n=>addStage({nama_tahapan:n}));addRecipient();qs('input[name="ada_operasional"][value="true"]').checked=true;toggleOperational();qsa('#nutrition input').forEach(i=>i.value='0.0');calculate();qs('#tanggalDisplay').textContent='Format: dd-mm-yyyy';
+    defaultStages.forEach(n=>addStage({nama_tahapan:n}));addRecipient();renumberRecipients();qs('input[name="ada_operasional"][value="true"]').checked=true;toggleOperational();qsa('#nutrition input').forEach(i=>i.value='0.0');calculate();qs('#tanggalDisplay').textContent='Format: dd-mm-yyyy';
   }
 
   function showFormMessage(text,type=''){const el=qs('#duplicateError');el.textContent=text;el.className='form-message';if(type)el.classList.add(type);}
@@ -187,15 +210,20 @@
     }
     const d=await drafts.get(draftId);
     if(d?.data){fillForm(d.data);return;}
-    defaultStages.forEach(n=>addStage({nama_tahapan:n}));addRecipient();
+    defaultStages.forEach(n=>addStage({nama_tahapan:n}));addRecipient();renumberRecipients();
   }
 
   function wireEvents(){
     qs('#addStage').addEventListener('click',()=>{addStage();onChange();});
-    qs('#addRecipient').addEventListener('click',()=>{addRecipient();onChange();});
+    qs('#addRecipient').addEventListener('click',()=>{addRecipient({}, {scroll:true});onChange();});
     form.addEventListener('click',e=>{
       if(e.target.matches('.remove-stage')){e.target.closest('.stage').remove();onChange();}
-      if(e.target.matches('.remove-recipient')){e.target.closest('.recipient-row').remove();if(!qsa('.recipient-row').length)addRecipient();onChange();}
+      if(e.target.matches('.remove-recipient')){
+        e.target.closest('.recipient-row').remove();
+        if(!qsa('.recipient-row').length)addRecipient();
+        renumberRecipients();
+        onChange();
+      }
     });
     form.addEventListener('input',onChange);
     form.addEventListener('change',async e=>{
@@ -207,7 +235,7 @@
           try{
             const existing=await kegiatan.get(e.target.value);
             showFormMessage(existing?`Laporan untuk tanggal ${formatDate(e.target.value)} sudah ada.`:'',existing?'error-text':'');
-          }catch{showFormMessage('Tidak dapat mengecek tanggal pada arsip online.','error-text');}
+          }catch(err){showFormMessage(`Tidak dapat mengecek tanggal pada arsip online: ${err.message}`,'error-text');}
         }else showFormMessage('');
       }
       onChange();
