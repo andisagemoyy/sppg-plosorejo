@@ -1,0 +1,13 @@
+{
+  "name": "sppg-plosorejo-online-archive",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Arsip operasional online SPPG Plosorejo berbasis Netlify Functions + Netlify Blobs",
+  "dependencies": {
+    "@netlify/blobs": "^11.0.3"
+  },
+  "scripts": {
+    "dev": "npx netlify dev"
+  }
+}
