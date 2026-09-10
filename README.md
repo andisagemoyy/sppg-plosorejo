@@ -90,3 +90,9 @@ Perbaikan utama:
 - Pesan error API sekarang menampilkan penyebab server agar debugging lebih mudah.
 
 Setelah mengganti file di repository, lakukan commit/push. Netlify akan deploy ulang otomatis.
+
+## Revisi v8 - Logo BGN
+Header seluruh halaman sekarang menampilkan logo Badan Gizi Nasional (BGN) dari aset publik ZonaLogo:
+`https://zonalogo.com/assets/logo-bgn.webp?asset=663`
+
+Logo ditempatkan di div brand bersama teks `SPPG PLOSOREJO` dan subjudul `Makan Bergizi Gratis`.
