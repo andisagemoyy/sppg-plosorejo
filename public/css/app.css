@@ -36,3 +36,21 @@
 .brand-subtitle{font-size:.69rem;font-weight:650;color:var(--muted);margin-top:4px}
 @media(max-width:800px){.brand-logo-wrap,.brand-logo{width:42px;height:42px}.brand-logo-wrap{flex-basis:42px}.brand-title{font-size:.94rem}.brand-subtitle{font-size:.66rem}}
 @media(max-width:520px){.topbar .inner{gap:8px}.brand-with-logo{gap:9px}.brand-logo-wrap,.brand-logo{width:38px;height:38px}.brand-logo-wrap{flex-basis:38px}}
+
+/* Master penerima manfaat v10 */
+.recipient-master-picker{margin-bottom:14px;padding:14px;border:1px solid #d9e7e1;border-radius:14px;background:#f7fbf9}
+.beneficiary-search{position:relative}
+.beneficiary-results{position:absolute;z-index:45;left:0;right:0;top:calc(100% + 6px);max-height:320px;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 14px 34px rgba(15,23,42,.16);padding:6px}
+.beneficiary-option{display:flex;width:100%;flex-direction:column;align-items:flex-start;gap:3px;border:0;background:#fff;padding:10px 11px;border-radius:9px;text-align:left;color:var(--text)}
+.beneficiary-option:hover,.beneficiary-option:focus{background:#eaf4f0;outline:none}
+.beneficiary-option strong{font-size:.92rem}
+.beneficiary-option span{font-size:.78rem;color:var(--muted);line-height:1.35}
+.beneficiary-empty{padding:12px;color:var(--muted);font-size:.88rem}
+.master-reference{margin-top:10px;padding:10px 12px;border-radius:10px;background:#eaf4f0;color:#145b47;font-size:.86rem;font-weight:650}
+.r-name[readonly]{background:#f3f6f8;color:#334155}
+@media(max-width:520px){.beneficiary-results{max-height:250px}.recipient-master-picker{padding:11px}}
+
+/* v11 - master penerima manfaat & pengelompokan Posyandu */
+.inline-link{color:var(--primary);font-weight:800;text-decoration:underline;text-underline-offset:2px}.recipient-picker-grid{align-items:start}.master-source-copy{margin:.35rem 0 0}.master-sections{display:grid;gap:16px;margin-top:18px}.master-group{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff}.master-group-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;background:#f5f7fa;border-bottom:1px solid var(--border)}.master-group-head h3{margin:0}.master-group-head span{font-size:.85rem;color:var(--muted)}.master-item{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border)}.master-item:last-child{border-bottom:0}.master-item div{display:flex;flex-direction:column;gap:3px}.master-item span:not(.badge){font-size:.82rem;color:var(--muted)}
+@media(max-width:800px){.recipient-picker-grid{grid-template-columns:1fr 1fr}.beneficiary-search-field{grid-column:1/-1}}
+@media(max-width:520px){.recipient-picker-grid{grid-template-columns:1fr}.beneficiary-search-field{grid-column:auto}.master-item{align-items:flex-start;flex-direction:column}.master-group-head{align-items:flex-start}}

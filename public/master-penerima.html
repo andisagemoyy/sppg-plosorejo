@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>Master Penerima Manfaat - SPPG PLOSOREJO</title>
+  <link rel="icon" type="image/webp" href="https://zonalogo.com/assets/logo-bgn.webp?asset=663">
+  <link rel="shortcut icon" href="https://zonalogo.com/assets/logo-bgn.webp?asset=663">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/access.js"></script>
+</head>
+<body>
+<header class="topbar"><div class="container inner"><div class="brand brand-with-logo"><div class="brand-logo-wrap"><img src="https://zonalogo.com/assets/logo-bgn.webp?asset=663" alt="Logo Badan Gizi Nasional" class="brand-logo" referrerpolicy="no-referrer"></div><div class="brand-copy"><span class="brand-title">SPPG PLOSOREJO</span><span class="brand-subtitle">Makan Bergizi Gratis</span></div></div><nav class="nav"><a href="index.html">Beranda</a><a href="profil.html">Data SPPG</a><a href="kegiatan.html">Kegiatan Harian</a><a class="active" href="master-penerima.html">Master Penerima</a><a href="dashboard.html">Rekap</a><a href="arsip-gizi.html">Ahli Gizi</a><a href="arsip-akuntansi.html">Akuntansi</a><span class="shared-badge">ONLINE</span></nav></div></header>
+<main class="container">
+  <section class="hero">
+    <h1>Master Penerima Manfaat</h1>
+    <p>Referensi resmi penerima manfaat SPPG Plosorejo yang dipakai pada Form Kegiatan Harian.</p>
+  </section>
+
+  <section class="card">
+    <div class="section-title">
+      <div>
+        <h2>File Sumber</h2>
+        <p class="muted master-source-copy">File Excel asli disimpan bersama source website agar tetap menjadi arsip tetap dan ikut tersimpan pada riwayat GitHub/deploy.</p>
+      </div>
+      <a class="btn btn-secondary" href="reference/data-penerima-manfaat-31-agustus-2026.xlsx" download>Unduh File Asli (.xlsx)</a>
+    </div>
+    <div class="notice success-notice"><strong>Arsip permanen website.</strong> File sumber ini berada langsung di dalam project website, bukan upload sementara. File akan tetap ada selama repository/project website tidak dihapus.</div>
+  </section>
+
+  <section class="card">
+    <div class="section-title"><h2>Daftar Penerima</h2><span id="masterCount" class="status-save saved">0 data</span></div>
+    <div class="grid grid-3">
+      <div class="field"><label>Jenis Penerima</label><select id="masterCategory"><option value="">Semua Jenis</option><option value="PAUD">PAUD</option><option value="TK/RA">TK/RA</option><option value="SD/MI">SD/MI</option><option value="SMP/MTS">SMP/MTS</option><option value="SMA/SMK/MA">SMA/SMK/MA</option><option value="ATS">ATS</option><option value="POSYANDU">Posyandu / 3B</option></select></div>
+      <div class="field hidden" id="masterPosyanduWrap"><label>Kelompok Posyandu</label><select id="masterPosyanduGroup"><option value="">Semua Kelompok Posyandu</option><option value="3B PLOSOREJO">3B PLOSOREJO</option><option value="3B MAYAHAN">3B MAYAHAN</option></select></div>
+      <div class="field"><label>Cari Nama</label><input type="search" id="masterSearch" placeholder="Contoh: SD 1, Bugenvil, Mayahan..."></div>
+    </div>
+    <div id="masterSections" class="master-sections"></div>
+  </section>
+</main>
+<script src="js/utils/common.js"></script>
+<script src="js/data/penerima-master.js"></script>
+<script src="js/pages/master-penerima.js"></script>
+</body>
+</html>

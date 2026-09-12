@@ -99,3 +99,32 @@ Logo ditempatkan di div brand bersama teks `SPPG PLOSOREJO` dan subjudul `Makan 
 
 ## Revisi v9
 - Logo BGN juga dipasang sebagai favicon/icon tab browser di seluruh halaman.
+
+## Revisi v10 - Master Penerima Manfaat
+
+Form **Kegiatan Harian > Kelompok Penerima Manfaat** kini memakai master dari file `reference/DATA PENERIMA MANFAAT 31 Agustus 2026.xlsx`.
+
+Kategori yang tersedia:
+- PAUD (4)
+- TK/RA (8)
+- SD/MI (7)
+- SMP/MTS (2)
+- SMA/SMK/MA (1)
+- ATS / Anak Tidak Sekolah (1)
+- 3B PLOSOREJO (7)
+- 3B MAYAHAN (6)
+
+Total master: **36 penerima manfaat**. Pada setiap kartu kelompok, pilih kategori terlebih dahulu, lalu cari nama sekolah/posyandu. Pilihan dari master disimpan bersama laporan melalui `master_id`, `kategori_master`, dan snapshot `referensi_master`. Data laporan lama tetap kompatibel; nama yang tidak ditemukan di master otomatis dibuka sebagai **Lainnya / Input Manual**.
+
+## Revisi v11 - Posyandu Terstruktur & Arsip File Master
+
+- Posyandu sekarang menjadi jenis penerima tersendiri: **Posyandu / 3B**.
+- Setelah memilih Posyandu, staf wajib memilih kelompok:
+  - **3B PLOSOREJO**: KENANGA (NGERIMPI), BUGENVIL (JETAK), NUSA INDAH (NUSO), KAMBOJA (KEDEN), MAWAR (PLOSO), MELATI (BRINGIN), ANGGREK (NJALINAN).
+  - **3B MAYAHAN**: DAHLIA KAYEN, ANGGREK MAYAHAN, CLAUDIA NGASINAN, MAWAR KARANGPUNG, MELATI BEBER, SEROJA SUMBEREJO.
+- Sesudah memilih kelompok Posyandu, kolom pencarian hanya menampilkan Posyandu dari kelompok tersebut.
+- Data lama dengan kategori `3B PLOSOREJO` / `3B MAYAHAN` tetap dapat dibuka dan otomatis dipetakan ke jenis **Posyandu / 3B**.
+- Ditambahkan halaman **Master Penerima** untuk melihat dan mencari seluruh daftar sekolah, ATS, dan Posyandu.
+- File Excel sumber disimpan langsung di dalam website pada:
+  `public/reference/data-penerima-manfaat-31-agustus-2026.xlsx`
+  sehingga ikut tersimpan pada source repository GitHub dan setiap deploy Netlify. File tetap tersedia selama repository/project website tidak dihapus.

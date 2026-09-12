@@ -10,7 +10,7 @@
   <script src="js/access.js"></script>
 </head>
 <body>
-<header class="topbar"><div class="container inner"><div class="brand brand-with-logo"><div class="brand-logo-wrap"><img src="https://zonalogo.com/assets/logo-bgn.webp?asset=663" alt="Logo Badan Gizi Nasional" class="brand-logo" referrerpolicy="no-referrer"></div><div class="brand-copy"><span class="brand-title">SPPG PLOSOREJO</span><span class="brand-subtitle">Makan Bergizi Gratis</span></div></div><nav class="nav"><a href="index.html">Beranda</a><a href="profil.html">Data SPPG</a><a class="active" href="kegiatan.html">Kegiatan Harian</a><a href="dashboard.html">Rekap</a><a href="arsip-gizi.html">Ahli Gizi</a><a href="arsip-akuntansi.html">Akuntansi</a><span class="shared-badge">ONLINE</span></nav></div></header>
+<header class="topbar"><div class="container inner"><div class="brand brand-with-logo"><div class="brand-logo-wrap"><img src="https://zonalogo.com/assets/logo-bgn.webp?asset=663" alt="Logo Badan Gizi Nasional" class="brand-logo" referrerpolicy="no-referrer"></div><div class="brand-copy"><span class="brand-title">SPPG PLOSOREJO</span><span class="brand-subtitle">Makan Bergizi Gratis</span></div></div><nav class="nav"><a href="index.html">Beranda</a><a href="profil.html">Data SPPG</a><a class="active" href="kegiatan.html">Kegiatan Harian</a><a href="master-penerima.html">Master Penerima</a><a href="dashboard.html">Rekap</a><a href="arsip-gizi.html">Ahli Gizi</a><a href="arsip-akuntansi.html">Akuntansi</a><span class="shared-badge">ONLINE</span></nav></div></header>
 <main class="container">
   <section class="hero"><h1 id="pageTitle">Form Kegiatan Harian</h1><p id="pageSubtitle">Laporan final tersimpan online dan dapat dibuka dari perangkat lain. Draft sementara tetap disimpan di perangkat agar input tidak mudah hilang.</p></section>
   <div id="fileNotice" class="notice hidden"><strong>Halaman perlu dijalankan melalui Netlify.</strong> Untuk debug fungsi penyimpanan online gunakan <code>npx netlify dev</code>, bukan membuka HTML dengan double-click.</div>
@@ -48,7 +48,7 @@
 
       <section class="card" id="penerima">
         <div class="section-title"><div><h2>4. Kelompok Penerima Manfaat</h2><div class="hint" id="recipientCount">0 kelompok</div></div><button type="button" class="btn btn-secondary btn-small" id="addRecipient">+ Tambah Kelompok</button></div>
-        <div class="notice compact-notice"><strong>Tambah kelompok:</strong> setiap klik tombol akan membuat kartu kelompok baru, lalu halaman otomatis berpindah ke kartu tersebut. Semua kelompok akan ikut tersimpan dalam satu laporan.</div>
+        <div class="notice compact-notice"><strong>Daftar penerima manfaat sudah dimuat dari data 31 Agustus 2026.</strong> Untuk Posyandu pilih <strong>Posyandu / 3B</strong>, lalu pilih kelompok <strong>3B PLOSOREJO</strong> atau <strong>3B MAYAHAN</strong>, baru cari nama Posyandu. Angka referensi master hanya menjadi panduan dan tidak otomatis mengubah isian Pria/Wanita/Lainnya. <a class="inline-link" href="master-penerima.html">Lihat Master Penerima</a>.</div>
         <div id="recipients"></div>
         <div class="summary-strip"><div class="summary-box"><span>Grand Total (Porsi)</span><strong id="grandTotal">0</strong></div><div id="differenceBox" class="summary-box ok"><span>Selisih (Porsi)</span><strong id="difference">0</strong></div></div>
       </section>
@@ -62,6 +62,6 @@
     <div class="sticky-actions"><span class="hint">Draft tersimpan lokal; laporan final tersimpan online di arsip SPPG.</span><div class="actions"><a class="btn btn-secondary hidden" id="cancelEdit" href="dashboard.html">Batal Edit</a><button type="button" class="btn btn-secondary" id="scrollNext">Scroll to View Other</button><button type="submit" class="btn btn-primary" id="submitReport">Simpan Laporan</button></div></div>
   </form>
 </main>
-<script src="js/api.js"></script><script src="js/db/draft-db.js"></script><script src="js/utils/common.js"></script><script src="js/services/data-service.js"></script><script src="js/pages/kegiatan.js"></script>
+<script src="js/api.js"></script><script src="js/db/draft-db.js"></script><script src="js/utils/common.js"></script><script src="js/services/data-service.js"></script><script src="js/data/penerima-master.js"></script><script src="js/pages/kegiatan.js"></script>
 </body>
 </html>
